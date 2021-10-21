@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  db:
+    image: mariadb
+    restart: always
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_DATABASE: payments
+      MYSQL_USER: root
+      MYSQL_PASSWORD: marzo31*
+      MYSQL_ROOT_PASSWORD: marzo31*
+    volumes:
+      - dbdata:/var/lib/mysql
+  app:
+    build: .
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/payments?zeroDateTimeBehavior=convertToNull
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: marzo31*
+    depends_on:
+      - db
+    ports:
+      - 8090:8080
+volumes:
+  dbdata:
+
